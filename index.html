@@ -351,6 +351,82 @@
     .feat-row{justify-content:center}
   }
 
+
+  /* ---------- starlight message wall ---------- */
+  #wall{min-height:100vh;min-height:100svh;padding:11vh 6vw 7vh;display:flex;flex-direction:column;align-items:center}
+  .wall-form{
+    position:relative;margin-top:3.6vh;width:100%;max-width:620px;
+    border:1px solid var(--line);border-radius:4px;
+    background:rgba(11,9,16,.55);padding:1.8rem 1.7rem 1.5rem;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  }
+  .wall-field{margin-bottom:1.25rem}
+  .wall-label{display:block;font-size:.68rem;letter-spacing:.4em;color:var(--purple-soft);opacity:.85;margin-bottom:.75rem}
+  .wall-form textarea,.wall-form input[type=text]{
+    width:100%;display:block;background:rgba(124,92,191,.05);
+    border:1px solid var(--line);border-radius:3px;color:var(--ink);
+    font-family:var(--serif-tc);font-weight:300;font-size:.92rem;
+    letter-spacing:.1em;line-height:2;padding:.72em 1em;resize:none;outline:none;
+    transition:border-color .35s ease,box-shadow .35s ease,background .35s ease;
+  }
+  .wall-form textarea{min-height:7.5em;max-height:20em;overflow-y:auto}
+  .wall-form textarea:focus,.wall-form input[type=text]:focus{
+    border-color:rgba(185,168,221,.55);background:rgba(124,92,191,.09);
+    box-shadow:0 0 16px rgba(124,92,191,.16);
+  }
+  .wall-form ::placeholder{color:var(--faint);letter-spacing:.12em}
+  /* 蜜罐欄位：真人看不到，機器人才會填 */
+  .wall-hp{position:absolute;left:-9999px;top:0;width:1px;height:1px;opacity:0}
+  .wall-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.3rem;flex-wrap:wrap}
+  .wall-count{font-family:var(--serif-en);font-size:.74rem;letter-spacing:.3em;color:var(--faint)}
+  .wall-count.over{color:#d59090}
+  .wall-send{
+    font-family:var(--serif-tc);font-weight:300;font-size:.76rem;letter-spacing:.28em;text-indent:.14em;
+    color:#c9c1d8;background:rgba(124,92,191,.06);border:1px solid var(--line);
+    padding:.62em 1.8em;border-radius:999px;cursor:pointer;transition:all .4s ease;
+  }
+  .wall-send:hover:not(:disabled){border-color:rgba(185,168,221,.6);color:#fff;background:rgba(124,92,191,.18);box-shadow:0 0 18px rgba(124,92,191,.2)}
+  .wall-send:disabled{opacity:.4;cursor:default}
+  .wall-msg{margin-top:.9rem;font-size:.74rem;letter-spacing:.16em;line-height:1.9;color:var(--muted);min-height:1.4em}
+  .wall-msg.ok{color:var(--purple-soft)}
+  .wall-msg.err{color:#d59090}
+  .wall-total{margin-top:3.6vh;font-family:var(--serif-en);font-size:.72rem;letter-spacing:.36em;color:var(--faint);min-height:1em}
+  /* 用多欄而非 grid：留言長短差距大（1 行～8 行），grid 會把同一列全部
+     拉到最高者的高度，短留言下方留大片空白；多欄讓每張卡維持自然高度。 */
+  /* 捲動框與多欄必須拆成兩層：多欄元素本身若被限制高度，會改成往右長出新欄
+     （實測 scrollWidth 2748px）變成橫向捲軸——外層負責捲動，內層高度自由。 */
+  .wall-scroll{
+    margin-top:1.5rem;width:100%;max-width:1100px;
+    background:rgba(185,168,221,.07);border:1px solid rgba(185,168,221,.07);
+    max-height:min(50vh,500px);overflow-y:auto;overflow-x:hidden;
+    scrollbar-width:thin;scrollbar-color:rgba(185,168,221,.25) transparent;
+  }
+  .wall-list{columns:4 240px;column-gap:1px}
+  .wall-card{
+    background:var(--bg);padding:1.5rem 1.4rem 1.3rem;position:relative;overflow:hidden;
+    break-inside:avoid;-webkit-column-break-inside:avoid;margin-bottom:1px;
+  }
+  .wall-card::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s ease;
+    background:radial-gradient(circle at 18% 0%,rgba(124,92,191,.14),transparent 62%);
+  }
+  .wall-card:hover::after{opacity:1}
+  .wall-star{
+    font-size:.85rem;color:var(--purple-soft);text-shadow:0 0 12px rgba(185,168,221,.75);
+    display:inline-block;animation:twinkle 3.4s ease-in-out infinite;animation-delay:var(--dl,0s);
+  }
+  .wall-text{margin-top:.9rem;color:#e6e2ee;font-size:.9rem;letter-spacing:.08em;line-height:2;font-weight:300;word-break:break-word}
+  .wall-meta{margin-top:.9rem;display:flex;align-items:baseline;justify-content:space-between;gap:.8em;flex-wrap:wrap}
+  .wall-sign{color:var(--muted);font-size:.76rem;letter-spacing:.18em;word-break:break-word;min-width:0}
+  .wall-date{font-family:var(--serif-en);color:var(--faint);font-size:.68rem;letter-spacing:.2em;flex-shrink:0}
+  .wall-empty{margin-top:1.5rem;color:var(--faint);font-size:.8rem;letter-spacing:.24em;line-height:2.2;text-align:center}
+  .wall-note{margin-top:1.4rem;color:var(--faint);font-size:.66rem;letter-spacing:.2em;text-align:center;line-height:2;max-width:34em}
+  @media (max-width:820px){
+    #wall{padding:12vh 7vw 8vh}
+    .wall-form{padding:1.5rem 1.3rem 1.3rem}
+    .wall-scroll{max-height:min(46vh,420px)}
+    .wall-foot{justify-content:center}
+  }
   /* ---------- reader ---------- */
   #reader{
     position:fixed;inset:0;z-index:50;display:none;flex-direction:column;
@@ -627,6 +703,37 @@
     </div>
   </section>
 
+  <!-- ═════════ STARLIGHT MESSAGE WALL ═════════ -->
+  <section id="wall" class="snap">
+    <p class="sec-kicker reveal" data-t="wall.kicker">STARLIGHT MESSAGE BOARD</p>
+    <h2 class="sec-title reveal d1" data-t="wall.title">星 光 留 言 板</h2>
+    <p class="sec-note reveal d2" data-t="wall.note">把想說的話，寫成一顆星。<br>一百字以內的祝福，會留在這片夜空裡。</p>
+
+    <form class="wall-form reveal d2" id="wallForm" autocomplete="off" novalidate>
+      <div class="wall-field">
+        <label class="wall-label" for="wallText" data-t="wall.labelText">你 的 祝 福</label>
+        <textarea id="wallText" name="text" maxlength="100" rows="4" data-tp="wall.phText" placeholder="例：謝謝你讓我在銀幕上看見光。"></textarea>
+      </div>
+      <div class="wall-field">
+        <label class="wall-label" for="wallName" data-t="wall.labelName">署 名</label>
+        <input type="text" id="wallName" name="name" maxlength="12" data-tp="wall.phName" placeholder="留下名字，或一顆匿名的星">
+      </div>
+      <input class="wall-hp" type="text" name="website" tabindex="-1" aria-hidden="true" autocomplete="off">
+      <div class="wall-foot">
+        <span class="wall-count" id="wallCount">0 / 100</span>
+        <button class="wall-send" type="submit" id="wallSend" data-t="wall.send">✦ 送出祝福</button>
+      </div>
+      <p class="wall-msg" id="wallMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="wall-total" id="wallTotal"></p>
+    <div class="wall-scroll" id="wallScroll">
+      <div class="wall-list" id="wallList" aria-label="星光留言"></div>
+    </div>
+    <p class="wall-empty" id="wallEmpty" hidden data-t="wall.empty">夜空還很安靜——留下第一顆星吧。</p>
+    <p class="wall-note reveal d3" data-t="wall.note2">版面上只會亮起最新的 10 則星光，但每一則留言都會完整保留。<br>所有留言將於九月底彙整，轉交經紀公司。<br>如有不當內容，管理者可隨時移除。</p>
+  </section>
+
   <!-- ═════════ GALAXY MAP ═════════ -->
   <section id="map" class="snap">
     <p class="sec-kicker reveal" data-t="map.kicker">CONSTELLATION OF WORKS</p>
@@ -670,7 +777,7 @@
     <p class="fin" data-t="footer.fin">PP YAO · 12TH ANNIVERSARY</p>
     <p class="sub" data-t="footer.sub">FROM THE FIRST STAR, AND ONWARD</p>
     <p class="orn" data-t="footer.orn">✦ &nbsp; ✧ &nbsp; ✦</p>
-    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-3</p>
+    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-6</p>
   </footer>
 
 </main>
@@ -716,12 +823,17 @@
 <script src="mvs.js"></script>
 <script src="book.js"></script>
 <script src="interviews.js"></script>
+<script src="wall-config.js"></script>
 <script>
 /* ══════════════════ 套用網站文字（site-text.js；後台可編輯） ══════════════════ */
 if (typeof SITE !== "undefined") {
   document.querySelectorAll("[data-t]").forEach(el=>{
     const v = SITE[el.dataset.t];
     if (v != null) el.innerHTML = v;
+  });
+  document.querySelectorAll("[data-tp]").forEach(el=>{
+    const v = SITE[el.dataset.tp];
+    if (v != null) el.placeholder = v;
   });
   if (SITE["page.title"]) document.title = SITE["page.title"];
   if (SITE["home.url"]) document.getElementById("homeLink").href = SITE["home.url"];
@@ -845,7 +957,7 @@ const edgeObs = new IntersectionObserver(es=>{
     if(e.isIntersecting){ nav.classList.remove("show"); counter.classList.remove("show"); }
   });
 },{rootMargin:"-40% 0px -40% 0px",threshold:0});
-["hero","book","map","mv","interviews"].forEach(id=>edgeObs.observe(document.getElementById(id)));
+["hero","book","wall","map","mv","interviews"].forEach(id=>edgeObs.observe(document.getElementById(id)));
 
 /* ══════════════════ MV nebula ══════════════════ */
 const mvGrid = document.getElementById("mvGrid");
@@ -859,6 +971,132 @@ const mvGrid = document.getElementById("mvGrid");
     <p class="mv-meta"><span class="y">${m.date.slice(0,4)}</span><span>${m.artist}</span>${m.directed ? '<span class="badge">執導作品</span>' : ""}</p>`;
   mvGrid.appendChild(a);
 });
+
+/* ══════════════════ 星光留言板 ══════════════════ */
+/* 後端網址寫在 wall-config.js；留空則為本機預覽模式（只存在自己的瀏覽器） */
+(function(){
+  const CFG = Object.assign(
+    {api:"", maxLen:100, maxName:12, cooldown:30, show:10},
+    (typeof WALL !== "undefined" ? WALL : {})
+  );
+  const form  = document.getElementById("wallForm");
+  if(!form) return;
+  const ta    = document.getElementById("wallText");
+  const nm    = document.getElementById("wallName");
+  const cnt   = document.getElementById("wallCount");
+  const btn   = document.getElementById("wallSend");
+  const msg   = document.getElementById("wallMsg");
+  const list  = document.getElementById("wallList");
+  const wrap  = document.getElementById("wallScroll");
+  const empty = document.getElementById("wallEmpty");
+  const total = document.getElementById("wallTotal");
+
+  const LKEY = "ppyao_wall_local";   /* 預覽模式的留言 */
+  const TKEY = "ppyao_wall_last";    /* 上次送出時間，用來擋連續洗版 */
+
+  const say = (t,cls)=>{ msg.textContent = t; msg.className = "wall-msg" + (cls ? " "+cls : ""); };
+  const two = n => String(n).padStart(2,"0");
+  const fmtDate = v => { const d = new Date(v); return isNaN(d) ? "" : d.getFullYear()+"."+two(d.getMonth()+1)+"."+two(d.getDate()); };
+  const store = (k,v)=>{ try{ localStorage.setItem(k,v); }catch(e){} };
+  const localAll = ()=>{ try{ return JSON.parse(localStorage.getItem(LKEY) || "[]"); }catch(e){ return []; } };
+
+  ta.maxLength = CFG.maxLen;
+  nm.maxLength = CFG.maxName;
+  cnt.textContent = "0 / " + CFG.maxLen;
+  /* 隨字數長高（min/max-height 由 CSS 夾住），手機上不必在小框裡捲動 */
+  const grow = ()=>{ ta.style.height = "auto"; ta.style.height = ta.scrollHeight + "px"; };
+  ta.addEventListener("input", ()=>{
+    const n = ta.value.length;
+    cnt.textContent = n + " / " + CFG.maxLen;
+    cnt.classList.toggle("over", n > CFG.maxLen);
+    grow();
+  });
+
+  /* 留言一律用 textContent 寫入，避免使用者輸入被當成 HTML 執行 */
+  function render(items, sum){
+    list.innerHTML = "";
+    wrap.hidden  = items.length === 0;
+    empty.hidden = items.length !== 0;
+    const n = (sum == null ? items.length : sum);
+    total.textContent = !n ? ""
+      : n > items.length ? "共 " + n + " 顆星光 ・ 顯示最新 " + items.length + " 則"
+      : n + " 顆星光";
+    items.forEach((m,i)=>{
+      const c = document.createElement("div");
+      c.className = "wall-card";
+      c.style.setProperty("--dl", (i % 5 * 0.7).toFixed(2) + "s");
+      c.innerHTML = '<span class="wall-star">✦</span><p class="wall-text"></p>'
+                  + '<div class="wall-meta"><span class="wall-sign"></span><span class="wall-date"></span></div>';
+      c.querySelector(".wall-text").textContent = m.text || "";
+      c.querySelector(".wall-sign").textContent = "— " + (m.name || "匿名的星星");
+      c.querySelector(".wall-date").textContent = fmtDate(m.date);
+      list.appendChild(c);
+    });
+  }
+
+  async function load(){
+    if(!CFG.api){ const a = localAll(); render(a.slice(0, CFG.show), a.length); return; }
+    try{
+      const url = CFG.api + (CFG.api.includes("?") ? "&" : "?") + "t=" + Date.now();
+      const j = await (await fetch(url)).json();
+      const arr = Array.isArray(j) ? j : (j.items || []);
+      const sum = (!Array.isArray(j) && j.total != null) ? j.total : arr.length;
+      render(arr.slice(0, CFG.show), sum);
+    }catch(err){
+      render([]);
+      say("留言載入失敗，請稍後重新整理。","err");
+    }
+  }
+
+  function finish(mode){
+    store(TKEY, String(Date.now()));
+    ta.value = ""; nm.value = ""; ta.style.height = "";
+    cnt.textContent = "0 / " + CFG.maxLen; cnt.classList.remove("over");
+    say(mode === "pending" ? "已送出，通過確認後就會在這片夜空亮起 ✦"
+      : mode === "local"   ? "已亮起 ✦（本機預覽模式，尚未連接後端）"
+      : "謝謝你，這顆星已經亮起 ✦", "ok");
+  }
+
+  form.addEventListener("submit", async ev=>{
+    ev.preventDefault();
+    if(form.website && form.website.value) return;          /* 蜜罐被填 = 機器人 */
+
+    const text = ta.value.trim(), name = nm.value.trim();
+    if(!text)                     return say("請先寫下你想說的話。","err");
+    if(text.length > CFG.maxLen)  return say("祝福請控制在 " + CFG.maxLen + " 字以內。","err");
+    if(name.length > CFG.maxName) return say("署名請控制在 " + CFG.maxName + " 字以內。","err");
+
+    const wait = Math.ceil(((+localStorage.getItem(TKEY) || 0) + CFG.cooldown*1000 - Date.now())/1000);
+    if(wait > 0) return say("剛剛才留過言，請 " + wait + " 秒後再試。","err");
+
+    btn.disabled = true; say("正在送出……");
+    try{
+      if(!CFG.api){
+        const arr = localAll();
+        arr.unshift({text, name, date:new Date().toISOString()});
+        store(LKEY, JSON.stringify(arr.slice(0,200)));
+        render(arr.slice(0, CFG.show), arr.length); finish("local");
+      }else{
+        /* text/plain 可避開 CORS preflight——Apps Script 不回應 OPTIONS */
+        const r = await fetch(CFG.api, {
+          method:"POST",
+          headers:{"Content-Type":"text/plain;charset=utf-8"},
+          body: JSON.stringify({text, name})
+        });
+        const j = await r.json();
+        if(!j.ok) throw new Error(j.error || "send failed");
+        finish(j.pending ? "pending" : "ok");
+        await load();
+      }
+    }catch(err){
+      say("送出失敗，請稍後再試一次。","err");
+    }finally{
+      btn.disabled = false;
+    }
+  });
+
+  load();
+})();
 
 /* ══════════════════ back to top ══════════════════ */
 /* 用 IntersectionObserver 而非 scroll 事件：離開封面（hero）就顯示按鈕 */
