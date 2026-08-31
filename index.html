@@ -22,7 +22,9 @@
     --serif-tc:"Noto Serif TC", "Songti TC", PMingLiU, serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  /* proximity 而非 mandatory：只有捲到接近吸附點時才對齊，其餘完全不干涉。
+     （mandatory 會要求畫面隨時停在吸附點上，全站只剩兩個點時會把人鎖在電子刊物） */
+  html{scroll-snap-type:y proximity;scroll-behavior:smooth}
   body{
     background:var(--bg);
     color:var(--ink);
@@ -50,7 +52,9 @@
   @keyframes driftB{from{transform:translate(0,0) scale(1)}to{transform:translate(5vmax,-6vmax) scale(1.08)}}
 
   main{position:relative;z-index:1}
-  section.snap{scroll-snap-align:start;position:relative}
+  section.snap{position:relative}
+  /* 只有封面與電子刊物保留翻頁般的吸附；其餘區塊自由捲動 */
+  #hero,#book{scroll-snap-align:start}
 
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity 1.1s cubic-bezier(.22,.6,.2,1),transform 1.1s cubic-bezier(.22,.6,.2,1)}
@@ -319,7 +323,7 @@
   }
 
   /* ---------- footer ---------- */
-  footer{padding:12vh 6vw 8vh;text-align:center;scroll-snap-align:end}
+  footer{padding:12vh 6vw 8vh;text-align:center}
   footer .fin{font-family:var(--serif-en);letter-spacing:.6em;text-indent:.6em;color:#d3c9e2;font-size:1rem}
   footer .sub{margin-top:1.4rem;color:var(--faint);font-size:.72rem;letter-spacing:.35em}
   footer .orn{margin-top:3rem;color:var(--purple-deep);font-size:.8rem;letter-spacing:1.2em;text-indent:1.2em}
@@ -780,7 +784,7 @@
     <p class="fin" data-t="footer.fin">PP YAO · 12TH ANNIVERSARY</p>
     <p class="sub" data-t="footer.sub">FROM THE FIRST STAR, AND ONWARD</p>
     <p class="orn" data-t="footer.orn">✦ &nbsp; ✧ &nbsp; ✦</p>
-    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-7</p>
+    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-8</p>
   </footer>
 
 </main>
