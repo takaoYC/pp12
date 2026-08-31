@@ -5,6 +5,7 @@ const SITE = {
   "home.url": "https://takaoyc.github.io/pp_uchutecho/index.html",
   "hero.name": "PP YAO",
   "hero.sub": "12th ANNIVERSARY",
+  "hero.note": "非官方・非營利紀念企劃",
   "hero.scroll": "SCROLL",
   "book.kicker": "COMMEMORATIVE PUBLICATION",
   "book.title": "出道十二週年紀念",
