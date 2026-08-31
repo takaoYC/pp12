@@ -422,9 +422,12 @@
   .wall-empty{margin-top:1.5rem;color:var(--faint);font-size:.8rem;letter-spacing:.24em;line-height:2.2;text-align:center}
   .wall-note{margin-top:1.4rem;color:var(--faint);font-size:.66rem;letter-spacing:.2em;text-align:center;line-height:2;max-width:34em}
   @media (max-width:820px){
-    #wall{padding:12vh 7vw 8vh}
+    #wall{padding:11vh 7vw 7vh}
     .wall-form{padding:1.5rem 1.3rem 1.3rem}
-    .wall-scroll{max-height:min(46vh,420px)}
+    /* 手機取消內嵌捲動：兩層捲動在觸控上會互搶，且區塊只比螢幕高一點時
+       scroll-snap 會硬把畫面吸回頂端或吸去下一區。讓留言直接在頁面裡展開，
+       區塊遠高於螢幕後，瀏覽器就會放行自由捲動（同 #interviews 的情況）。 */
+    .wall-scroll{max-height:none;overflow:visible}
     .wall-foot{justify-content:center}
   }
   /* ---------- reader ---------- */
@@ -777,7 +780,7 @@
     <p class="fin" data-t="footer.fin">PP YAO · 12TH ANNIVERSARY</p>
     <p class="sub" data-t="footer.sub">FROM THE FIRST STAR, AND ONWARD</p>
     <p class="orn" data-t="footer.orn">✦ &nbsp; ✧ &nbsp; ✦</p>
-    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-6</p>
+    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-7</p>
   </footer>
 
 </main>
