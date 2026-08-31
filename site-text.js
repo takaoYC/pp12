@@ -7,7 +7,7 @@ const SITE = {
   "hero.sub": "12th ANNIVERSARY",
   "hero.scroll": "SCROLL",
   "book.kicker": "COMMEMORATIVE PUBLICATION",
-  "book.title": "出道十二週年紀念",
+  "book.title": "出道十二週年紀念(非官方・非營利)",
   "book.credit": "文　字<b>ㄅ級分的煙機</b>",
   "book.desc": "乘著光影而來的馭墨者。將那些在黑夜裡翻湧的感受，一筆一劃，落成白紙上的深沉回聲。選取十二部作品，寫成兩個篇章——「在不同之間，看見彼此」與「在青春散場以前，留下些什麼」。",
   "book.hint": "✦ 點擊書本封面閱讀",
