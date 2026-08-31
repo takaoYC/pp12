@@ -21,6 +21,10 @@ const SITE = {
   "wall.phText": "例：謝謝你讓我在銀幕上看見光。",
   "wall.phName": "留下名字，或一顆匿名的星",
   "wall.send": "✦ 送出祝福",
+  "wall.confirmTitle": "送 出 前 ， 請 確 認",
+  "wall.warn": "・ 留言會<b>公開顯示</b>在這個網站上，任何人都看得到。<br>・ 送出後<b>無法自行修改或刪除</b>，需要協助請聯繫管理者。<br>・ 版面只亮出最新 10 則，但所有留言都會保留，並於九月底彙整轉交經紀公司。",
+  "wall.back": "返回修改",
+  "wall.confirmSend": "✦ 確認送出",
   "wall.empty": "夜空還很安靜——留下第一顆星吧。",
   "wall.note2": "版面上只會亮起最新的 10 則星光。<br>所有留言將於九月底彙整，轉交經紀公司。<br>如有不當內容，管理者可隨時移除。",
   "map.kicker": "CONSTELLATION OF WORKS",
@@ -35,5 +39,5 @@ const SITE = {
   "footer.fin": "PP YAO · 12TH ANNIVERSARY",
   "footer.sub": "FROM THE FIRST STAR, AND ONWARD",
   "footer.orn": "✦ &nbsp; ✧ &nbsp; ✦",
-  "footer.ver": "ver 2026.09.01-10"
+  "footer.ver": "ver 2026.09.01-11"
 };

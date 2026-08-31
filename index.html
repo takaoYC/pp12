@@ -399,6 +399,30 @@
   }
   .wall-send:hover:not(:disabled){border-color:rgba(185,168,221,.6);color:#fff;background:rgba(124,92,191,.18);box-shadow:0 0 18px rgba(124,92,191,.2)}
   .wall-send:disabled{opacity:.4;cursor:default}
+  /* display:flex 的優先序高於 UA 的 [hidden]{display:none}，必須自己補 */
+  .wall-foot[hidden]{display:none}
+  /* 二段式送出：確認面板 */
+  .wall-confirm{display:none;margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+  .wall-confirm.on{display:block}
+  .wall-confirm-title{font-size:.68rem;letter-spacing:.4em;color:var(--purple-soft);opacity:.9}
+  .wall-preview{
+    margin-top:1rem;padding:1.1rem 1.2rem;border:1px solid var(--line);
+    border-radius:3px;background:rgba(124,92,191,.05);
+  }
+  .wall-preview .pv-text{
+    color:#e6e2ee;font-size:.88rem;line-height:2;letter-spacing:.08em;
+    white-space:pre-line;word-break:break-word;
+  }
+  .wall-preview .pv-sign{margin-top:.8rem;color:var(--muted);font-size:.74rem;letter-spacing:.18em;word-break:break-word}
+  .wall-warn{margin-top:1.2rem;color:var(--muted);font-size:.72rem;letter-spacing:.08em;line-height:2.2}
+  .wall-warn b{color:#d9cfe6;font-weight:400}
+  .wall-back{
+    font-family:var(--serif-tc);font-weight:300;font-size:.74rem;letter-spacing:.24em;text-indent:.12em;
+    color:var(--muted);background:none;border:1px solid transparent;
+    padding:.62em 1.2em;border-radius:999px;cursor:pointer;transition:all .4s ease;
+  }
+  .wall-back:hover:not(:disabled){color:#e6e0f2;border-color:var(--line)}
+  .wall-back:disabled{opacity:.4;cursor:default}
   .wall-msg{margin-top:.9rem;font-size:.74rem;letter-spacing:.16em;line-height:1.9;color:var(--muted);min-height:1.4em}
   .wall-msg.ok{color:var(--purple-soft)}
   .wall-msg.err{color:#d59090}
@@ -741,9 +765,22 @@
         <input type="text" id="wallName" name="name" maxlength="12" data-tp="wall.phName" placeholder="留下名字，或一顆匿名的星">
       </div>
       <input class="wall-hp" type="text" name="website" tabindex="-1" aria-hidden="true" autocomplete="off">
-      <div class="wall-foot">
+      <div class="wall-foot" id="wallFoot">
         <span class="wall-count" id="wallCount">0 / 100</span>
         <button class="wall-send" type="submit" id="wallSend" data-t="wall.send">✦ 送出祝福</button>
+      </div>
+
+      <div class="wall-confirm" id="wallConfirm" role="group" aria-labelledby="wallConfirmTitle">
+        <p class="wall-confirm-title" id="wallConfirmTitle" data-t="wall.confirmTitle">送 出 前 ， 請 確 認</p>
+        <div class="wall-preview">
+          <p class="pv-text" id="pvText"></p>
+          <p class="pv-sign" id="pvSign"></p>
+        </div>
+        <div class="wall-warn" data-t="wall.warn">・ 留言會<b>公開顯示</b>在這個網站上，任何人都看得到。<br>・ 送出後<b>無法自行修改或刪除</b>，需要協助請聯繫管理者。<br>・ 版面只亮出最新 10 則，但所有留言都會保留，並於九月底彙整轉交經紀公司。</div>
+        <div class="wall-foot">
+          <button class="wall-back" type="button" id="wallBack" data-t="wall.back">返回修改</button>
+          <button class="wall-send" type="button" id="wallConfirmSend" data-t="wall.confirmSend">✦ 確認送出</button>
+        </div>
       </div>
       <p class="wall-msg" id="wallMsg" role="status" aria-live="polite"></p>
     </form>
@@ -799,7 +836,7 @@
     <p class="fin" data-t="footer.fin">PP YAO · 12TH ANNIVERSARY</p>
     <p class="sub" data-t="footer.sub">FROM THE FIRST STAR, AND ONWARD</p>
     <p class="orn" data-t="footer.orn">✦ &nbsp; ✧ &nbsp; ✦</p>
-    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-10</p>
+    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-11</p>
   </footer>
 
 </main>
@@ -1010,6 +1047,12 @@ const mvGrid = document.getElementById("mvGrid");
   const msg   = document.getElementById("wallMsg");
   const list  = document.getElementById("wallList");
   const wrap  = document.getElementById("wallScroll");
+  const foot  = document.getElementById("wallFoot");
+  const box   = document.getElementById("wallConfirm");
+  const back  = document.getElementById("wallBack");
+  const okBtn = document.getElementById("wallConfirmSend");
+  const pvT   = document.getElementById("pvText");
+  const pvS   = document.getElementById("pvSign");
   const empty = document.getElementById("wallEmpty");
   const total = document.getElementById("wallTotal");
 
@@ -1033,6 +1076,8 @@ const mvGrid = document.getElementById("mvGrid");
     cnt.classList.toggle("over", n > CFG.maxLen);
     grow();
   });
+  /* 內容一改動就退出確認狀態，避免確認的與送出的不是同一份 */
+  [ta, nm].forEach(el => el.addEventListener("input", ()=>{ if(box.classList.contains("on")) closeConfirm(false); }));
 
   /* 留言一律用 textContent 寫入，避免使用者輸入被當成 HTML 執行 */
   function render(items, sum){
@@ -1079,7 +1124,22 @@ const mvGrid = document.getElementById("mvGrid");
       : "謝謝你，這顆星已經亮起 ✦", "ok");
   }
 
-  form.addEventListener("submit", async ev=>{
+  /* 送出分兩段：先讓人看到「公開後長什麼樣」與警語，確認後才真的寫出去 */
+  function openConfirm(text, name){
+    pvT.textContent = text;
+    pvS.textContent = "— " + (name || "匿名的星星");
+    box.classList.add("on");
+    foot.hidden = true;
+    say("");
+    okBtn.focus();
+  }
+  function closeConfirm(focusBack){
+    box.classList.remove("on");
+    foot.hidden = false;
+    if(focusBack) ta.focus();
+  }
+
+  form.addEventListener("submit", ev=>{
     ev.preventDefault();
     if(form.website && form.website.value) return;          /* 蜜罐被填 = 機器人 */
 
@@ -1091,6 +1151,15 @@ const mvGrid = document.getElementById("mvGrid");
     const wait = Math.ceil(((+localStorage.getItem(TKEY) || 0) + CFG.cooldown*1000 - Date.now())/1000);
     if(wait > 0) return say("剛剛才留過言，請 " + wait + " 秒後再試。","err");
 
+    openConfirm(text, name);
+  });
+
+  back.addEventListener("click", ()=>closeConfirm(true));
+
+  okBtn.addEventListener("click", async ()=>{
+    const text = ta.value.trim(), name = nm.value.trim();
+    okBtn.disabled = back.disabled = true;
+    closeConfirm(false);
     btn.disabled = true; say("正在送出……");
     try{
       if(!CFG.api){
@@ -1113,7 +1182,7 @@ const mvGrid = document.getElementById("mvGrid");
     }catch(err){
       say("送出失敗，請稍後再試一次。","err");
     }finally{
-      btn.disabled = false;
+      btn.disabled = okBtn.disabled = back.disabled = false;
     }
   });
 
