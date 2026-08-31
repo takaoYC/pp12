@@ -2,7 +2,7 @@
 const SITE = {
   "page.title": "PP YAO — 12th Anniversary",
   "home.label": "✦ 宇宙手帖",
-  "home.url": "https://takaoyc.github.io/pp_uchutecho/index.html",
+  "home.url": "https://takaoyc.github.io/pp_uchutecho",
   "hero.name": "PP YAO",
   "hero.sub": "12th ANNIVERSARY",
   "hero.scroll": "SCROLL",
