@@ -9,7 +9,7 @@ const SITE = {
   "book.kicker": "COMMEMORATIVE PUBLICATION",
   "book.title": "出道十二週年紀念<br>(非官方・非營利)",
   "book.credit": "文　字<b>ㄅ級分的煙機</b>",
-  "book.desc": "乘著光影而來的馭墨者。將那些在黑夜裡翻湧的感受，一筆一劃，落成白紙上的深沉回聲。選取十二部作品，寫成兩個篇章——「在不同之間，看見彼此」與「在青春散場以前，留下些什麼」。",
+  "book.desc": "乘著光影而來的馭墨者。將那些在黑夜裡翻湧的感受，一筆一劃，落成白紙上的深沉回聲。選取十二部作品，寫成兩個篇章：「在不同之間，看見彼此」與「在青春散場以前，留下些什麼」。",
   "book.hint": "✦ 點擊書本封面閱讀",
   "book.features": "<span>✦ 字級調整</span><span>✦ 頁面深淺</span><span>✦ 直排/橫排</span>",
   "reader.title": "姚愛寗出道十二週年紀念",
@@ -29,7 +29,7 @@ const SITE = {
   "wall.note2": "版面上只會亮起最新的 10 則星光。<br>所有留言將於九月底彙整，轉交經紀公司。<br>如有不當內容，管理者可隨時移除。",
   "map.kicker": "CONSTELLATION OF WORKS",
   "map.title": "作 品 星 系",
-  "map.note": "十二年的軌跡，凝成一座星系。<br>每一部作品，都是一顆自轉的星球——沿著旋臂輕觸，或緩緩下滑，逐一造訪。",
+  "map.note": "十二年的軌跡，凝成一座星系。<br>每一部作品，都是一顆自轉的星球。沿著旋臂輕觸，或緩緩下滑，逐一造訪。",
   "mv.kicker": "MUSIC VIDEO NEBULA",
   "mv.title": "MV 星 雲",
   "mv.note": "散落在星系外緣的光點，每一支 MV，都是一次短暫而明亮的閃爍。<br>輕觸星光，前往觀看。",
@@ -39,5 +39,5 @@ const SITE = {
   "footer.fin": "PP YAO · 12TH ANNIVERSARY",
   "footer.sub": "FROM THE FIRST STAR, AND ONWARD",
   "footer.orn": "✦ &nbsp; ✧ &nbsp; ✦",
-  "footer.ver": "ver 2026.09.01-11"
+  "footer.ver": "ver 2026.09.01-12"
 };
