@@ -15,7 +15,7 @@ const SITE = {
   "reader.title": "姚愛寗出道十二週年紀念",
   "wall.kicker": "STARLIGHT MESSAGE BOARD",
   "wall.title": "星 光 留 言 板",
-  "wall.note": "把想說的話，寫成一顆星。<br>一百字以內的祝福，會留在這片夜空裡。",
+  "wall.note": "把想對PP說的話，寫成一顆星。<br>一百字以內的祝福，會留在這片夜空裡。",
   "wall.labelText": "你 的 祝 福",
   "wall.labelName": "署 名",
   "wall.phText": "例：謝謝你讓我在銀幕上看見光。",
