@@ -39,5 +39,5 @@ const SITE = {
   "footer.fin": "PP YAO · 12TH ANNIVERSARY",
   "footer.sub": "FROM THE FIRST STAR, AND ONWARD",
   "footer.orn": "✦ &nbsp; ✧ &nbsp; ✦",
-  "footer.ver": "ver 2026.09.01-12"
+  "footer.ver": "ver 2026.09.01-14"
 };
