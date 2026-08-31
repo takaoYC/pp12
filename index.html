@@ -117,6 +117,13 @@
     width:42%;height:auto;aspect-ratio:760/820;
     pointer-events:none;user-select:none;opacity:.95;
   }
+  /* 手機上圖形只有約 79px 寬（受 .hero-planet-wrap 的 48vw 上限所限），
+     stroke-width:3 換算後不到 1 個實體像素，抗鋸齒會把細線吃掉——「2」的底橫線
+     不透明度最低（.3），所以最先消失。整組等比加粗（不改變筆畫間的相對輕重），
+     取 6 是為了讓 320px/DPR2 的舊機種也還有 1 個實體像素以上。 */
+  @media (max-width:820px){
+    .hero-twelve g{stroke-width:6}
+  }
   .hero-twelve .star-core{animation:starCore 4.5s ease-in-out infinite}
   .hero-twelve .star-glow{animation:starGlow 4.5s ease-in-out infinite}
   @keyframes starCore{0%,100%{opacity:.65}50%{opacity:1}}
@@ -665,11 +672,13 @@
             <stop offset=".3" stop-color="#e9e3f2" stop-opacity=".45"/>
             <stop offset="1" stop-color="#e9e3f2" stop-opacity="0"/>
           </linearGradient>
-          <!-- 「2」底橫線：右端較亮再收尾 -->
+          <!-- 「2」底橫線：右端較亮再收尾。
+               起始不透明度不可再低於 .5：手機上整組筆畫不到 1 個實體像素，
+               低於此值時抗鋸齒後的覆蓋率會低到整條線看不見（需縮放才浮現）。 -->
           <linearGradient id="gBase" gradientUnits="userSpaceOnUse" x1="413" y1="598" x2="700" y2="598">
-            <stop offset="0" stop-color="#d9d2e6" stop-opacity=".3"/>
-            <stop offset=".75" stop-color="#e5dff0" stop-opacity=".6"/>
-            <stop offset="1" stop-color="#e5dff0" stop-opacity=".1"/>
+            <stop offset="0" stop-color="#d9d2e6" stop-opacity=".5"/>
+            <stop offset=".75" stop-color="#e5dff0" stop-opacity=".75"/>
+            <stop offset="1" stop-color="#e5dff0" stop-opacity=".22"/>
           </linearGradient>
         </defs>
         <!-- 星芒後方光暈 -->
@@ -790,7 +799,7 @@
     <p class="fin" data-t="footer.fin">PP YAO · 12TH ANNIVERSARY</p>
     <p class="sub" data-t="footer.sub">FROM THE FIRST STAR, AND ONWARD</p>
     <p class="orn" data-t="footer.orn">✦ &nbsp; ✧ &nbsp; ✦</p>
-    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-9</p>
+    <p class="sub" style="margin-top:2rem;opacity:.45" data-t="footer.ver">ver 2026.09.01-10</p>
   </footer>
 
 </main>
